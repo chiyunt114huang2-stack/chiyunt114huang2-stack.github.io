@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>統計學（一）課程講義與隨堂筆記 | 黃建瑋</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background-color: #0b1120;
+      /* 還原截圖中的深色方格網線背景 */
+      background-image: 
+        linear-gradient(to right, rgba(30, 41, 59, 0.45) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(30, 41, 59, 0.45) 1px, transparent 1px);
+      background-size: 28px 28px;
+      color: #f8fafc;
+    }
+    .chapter-card {
+      background-color: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(51, 65, 85, 0.8);
+      transition: all 0.2s ease;
+    }
+    .chapter-card:hover {
+      border-color: #3b82f6;
+      background-color: rgba(30, 41, 59, 0.9);
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between py-10 px-4">
+
+  <div class="max-w-4xl w-full mx-auto">
+    <!-- 頂部導覽與標題 -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-6 mb-8">
+      <div>
+        <div class="text-xs font-semibold tracking-widest text-blue-400 uppercase mb-1">
+          STATISTICS (I) • COURSE PORTAL
+        </div>
+        <h1 class="text-2xl md:text-3xl font-bold text-white">
+          統計學（一）課程章節與隨堂筆記
+        </h1>
+      </div>
+      <a href="index.html" class="inline-flex items-center gap-2 text-sm text-slate-300 hover:text-white bg-slate-800/90 hover:bg-slate-700 px-4 py-2 rounded-lg border border-slate-700 transition self-start sm:self-auto">
+        ← 返回個人首頁
+      </a>
+    </div>
+
+    <!-- 章節字卡列表（依照你的筆記命名為第 8 章） -->
+    <div class="space-y-4">
+      
+      <!-- 第 8 章字卡：連續機率分配 -->
+      <div class="chapter-card rounded-xl p-5 md:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-lg">
+        <div class="flex items-center gap-5">
+          <!-- 左側章節數字 -->
+          <div class="text-center w-12 shrink-0">
+            <div class="text-2xl font-bold text-blue-400 leading-none">8</div>
+            <div class="text-[10px] font-bold tracking-widest text-slate-500 mt-1">CH</div>
+          </div>
+          <!-- 中間章節名稱 -->
+          <div>
+            <h2 class="text-lg font-bold text-slate-100">
+              連續機率分配
+            </h2>
+            <p class="text-xs text-slate-400 font-mono mt-0.5">
+              Continuous Probability Distributions（§8.1 連續隨機變數與均勻分配）
+            </p>
+          </div>
+        </div>
+
+        <!-- 右側隨堂筆記按鈕 -->
+        <div class="flex items-center gap-3 self-end sm:self-auto">
+          <a href="ch8-notes.html" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold bg-amber-500/15 text-amber-400 border border-amber-500/40 hover:bg-amber-500 hover:text-slate-950 transition shadow-sm">
+            📝 隨堂筆記
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 底部版權列 -->
+  <footer class="max-w-4xl w-full mx-auto text-center text-xs text-slate-500 pt-12">
+    統計學（一）課程筆記 ・ 黃建瑋 Chien-Wei Huang
+  </footer>
+
+</body>
+</html>
