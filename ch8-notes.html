@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ch8 連續機率分配 | 黃建瑋筆記</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+  <style>
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background-color: #e2e8f0;
+      color: #1e293b;
+    }
+    .grid-paper {
+      background-color: #f8fafc;
+      background-image: 
+        linear-gradient(to right, rgba(148, 163, 184, 0.22) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(148, 163, 184, 0.22) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+    .section-pill {
+      background-color: #1e3a8a;
+      color: white;
+      display: inline-block;
+      padding: 6px 20px;
+      border-radius: 9999px;
+      font-weight: 700;
+      font-size: 1.05rem;
+      box-shadow: 0 2px 4px rgba(30, 58, 138, 0.2);
+    }
+    .hl-yellow {
+      background: linear-gradient(transparent 55%, #fef08a 55%);
+      padding: 0 2px;
+      font-weight: 600;
+    }
+    .hl-pink {
+      background: linear-gradient(transparent 55%, #fbcfe8 55%);
+      padding: 0 2px;
+      font-weight: 600;
+    }
+    .red-box {
+      border: 1.5px solid #dc2626;
+      background-color: rgba(255, 255, 255, 0.75);
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body class="py-8 px-4">
+
+  <div class="max-w-4xl mx-auto mb-4 flex justify-between items-center">
+    <a href="statistics.html" class="inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-blue-700 bg-white px-4 py-2 rounded-lg shadow-sm border border-slate-200 transition">
+      ← 返回章節目錄
+    </a>
+    <span class="text-xs text-slate-500">Chien-Wei Huang • Statistics Notes</span>
+  </div>
+
+  <article class="max-w-4xl mx-auto grid-paper rounded-xl shadow-xl border border-slate-300 p-6 md:p-10">
+    
+    <header class="border-b-2 border-slate-400 pb-4 mb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
+      <div>
+        <h1 class="text-2xl md:text-3xl font-bold text-slate-900 tracking-wide flex items-center gap-2">
+          Ch8 連續機率分配 <span class="text-amber-500 text-2xl">✏️</span> 重點筆記
+        </h1>
+      </div>
+      <div class="text-xs md:text-sm text-slate-600 md:text-right space-y-1">
+        <div class="font-semibold text-slate-700">統計學（一）｜ 銘傳大學 財務金融系</div>
+        <div>姓名：<span class="border-b border-slate-500 px-3 font-medium text-slate-800">黃建瑋</span> 學號：<span class="border-b border-slate-500 px-4"></span></div>
+      </div>
+    </header>
+
+    <div class="flex flex-wrap items-center gap-2 text-xs md:text-sm mb-6">
+      <span class="font-bold text-slate-700 mr-1">本章地圖 ▸</span>
+      <span class="px-3 py-1 rounded-full border border-slate-600 bg-white/80 font-medium">8.1 連續隨機變數</span>
+      <span class="text-slate-400">→</span>
+      <span class="px-3 py-1 rounded-full border border-slate-600 bg-white/80 font-medium">機率密度函數 (PDF)</span>
+      <span class="text-slate-400">→</span>
+      <span class="px-3 py-1 rounded-full border-2 border-red-500 text-red-600 bg-white/90 font-bold">均勻分配 U(a, b) ★</span>
+    </div>
+
+    <div class="bg-amber-100/90 border border-amber-300 rounded-md p-3.5 mb-8 text-sm text-slate-800 leading-relaxed shadow-sm">
+      <span class="font-bold text-amber-900">📌 核心觀念提醒：</span>連續型隨機變數的關鍵在於<span class="hl-pink">「機率 ＝ 曲線下的面積」</span>，單一特定點的機率永遠為 $0$。計算均勻分配時只要掌握長方形的<span class="hl-yellow">「底 × 高」</span>就能輕鬆算出區間機率！
+    </div>
+
+    <section class="mb-10">
+      <div class="mb-5">
+        <h2 class="section-pill">§8.1 連續隨機變數 (Random Variable)：間斷 vs 連續</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-white/80 border border-slate-300 rounded-lg p-5 shadow-sm">
+          <div class="flex items-center justify-between border-b border-slate-200 pb-2 mb-3">
+            <h3 class="font-bold text-blue-900 text-base">(1) 間斷型 discrete r.v.</h3>
+            <span class="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded font-semibold">PMF</span>
+          </div>
+          <ul class="text-sm space-y-2 text-slate-700 mb-4">
+            <li>• <strong>定義：</strong>$X$ 的可能值為<span class="hl-yellow">可數的 (countable)</span>，如人數、次數。</li>
+            <li>• <strong>機率表達：</strong>機率質量函數 (probability mass function)。</li>
+            <li>• <strong>例子 ($X$：進球數)：</strong>
+              <div class="mt-2 overflow-x-auto">
+                <table class="w-full text-center border-collapse border border-slate-400 text-xs bg-white">
+                  <tr class="bg-slate-100 font-bold">
+                    <td class="border border-slate-400 py-1 px-2">$x$</td>
+                    <td class="border border-slate-400 py-1 px-2">0</td>
+                    <td class="border border-slate-400 py-1 px-2">1</td>
+                    <td class="border border-slate-400 py-1 px-2">2</td>
+                    <td class="border border-slate-400 py-1 px-2">3</td>
+                  </tr>
+                  <tr>
+                    <td class="border border-slate-400 py-1 px-2 font-semibold">$P(x)$</td>
+                    <td class="border border-slate-400 py-1 px-2">$\frac{1}{8}$</td>
+                    <td class="border border-slate-400 py-1 px-2">$\frac{3}{8}$</td>
+                    <td class="border border-slate-400 py-1 px-2">$\frac{3}{8}$</td>
+                    <td class="border border-slate-400 py-1 px-2">$\frac{1}{8}$</td>
+                  </tr>
+                </table>
+              </div>
+              <div class="text-xs text-slate-600 mt-1.5">二項公式：$P(X=x) = C^n_x p^x (1-p)^{n-x}$</div>
+            </li>
+          </ul>
+          <div class="bg-slate-50 border border-slate-200 rounded p-2 text-center">
+            <svg viewBox="0 0 240 125" class="w-full max-w-[230px] mx-auto">
+              <line x1="30" y1="100" x2="220" y2="100" stroke="#334155" stroke-width="1.5"/>
+              <line x1="30" y1="15" x2="30" y2="100" stroke="#334155" stroke-width="1.5"/>
+              <text x="15" y="22" font-size="10" fill="#dc2626" font-weight="bold">PMF</text>
+              <line x1="65" y1="100" x2="65" y2="75" stroke="#2563eb" stroke-width="2.5"/>
+              <circle cx="65" cy="75" r="3" fill="#2563eb"/>
+              <text x="61" y="114" font-size="11" fill="#1e293b">0</text>
+              <line x1="110" y1="100" x2="110" y2="30" stroke="#2563eb" stroke-width="2.5"/>
+              <circle cx="110" cy="30" r="3" fill="#2563eb"/>
+              <text x="106" y="114" font-size="11" fill="#1e293b">1</text>
+              <line x1="155" y1="100" x2="155" y2="30" stroke="#2563eb" stroke-width="2.5"/>
+              <circle cx="155" cy="30" r="3" fill="#2563eb"/>
+              <text x="151" y="114" font-size="11" fill="#1e293b">2</text>
+              <line x1="200" y1="100" x2="200" y2="75" stroke="#2563eb" stroke-width="2.5"/>
+              <circle cx="200" cy="75" r="3" fill="#2563eb"/>
+              <text x="196" y="114" font-size="11" fill="#1e293b">3</text>
+            </svg>
+          </div>
+        </div>
+
+        <div class="bg-white/80 border border-slate-300 rounded-lg p-5 shadow-sm">
+          <div class="flex items-center justify-between border-b border-slate-200 pb-2 mb-3">
+            <h3 class="font-bold text-blue-900 text-base">(2) 連續型 continuous r.v.</h3>
+            <span class="text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded font-semibold">PDF</span>
+          </div>
+          <ul class="text-sm space-y-2 text-slate-700 mb-3">
+            <li>• <strong>定義：</strong>$X$ 的可能值為<span class="hl-pink">不可數的 (uncountable)</span>，如長度、重量、時間。</li>
+            <li>• <strong>機率表達：</strong>機率密度函數 (probability density function)。</li>
+            <li>• <strong>例子 ($X$：Louisa 等待時間 0~10 分)：</strong>
+              <span class="text-xs text-red-600 block mt-1">※ 無法用表格一一列舉所有小數時間，改以<strong>曲線下面積</strong>代表機率！</span>
+            </li>
+          </ul>
+          <div class="bg-slate-50 border border-slate-200 rounded p-2 text-center">
+            <svg viewBox="0 0 260 130" class="w-full max-w-[250px] mx-auto">
+              <polygon points="118,100 118,45 140,30 140,100" fill="#bfdbfe" opacity="0.85"/>
+              <line x1="25" y1="100" x2="245" y2="100" stroke="#334155" stroke-width="1.5"/>
+              <line x1="25" y1="15" x2="25" y2="100" stroke="#334155" stroke-width="1.5"/>
+              <polyline points="25,100 140,30 235,100" fill="none" stroke="#2563eb" stroke-width="2"/>
+              <text x="195" y="60" font-size="11" fill="#1e3a8a" font-style="italic">f(x)</text>
+              <text x="145" y="25" font-size="10" fill="#dc2626" font-weight="bold">PDF</text>
+              <line x1="118" y1="45" x2="118" y2="100" stroke="#1e40af" stroke-dasharray="3,2"/>
+              <line x1="140" y1="30" x2="140" y2="100" stroke="#1e40af" stroke-dasharray="3,2"/>
+              <text x="72" y="24" font-size="9.5" fill="#1e3a8a" font-weight="bold">等 4~5 分機率</text>
+              <path d="M 110 27 Q 125 32 128 52" fill="none" stroke="#1e3a8a" stroke-width="1"/>
+              <text x="22" y="114" font-size="10">0</text>
+              <text x="48" y="114" font-size="10">1</text>
+              <text x="71" y="114" font-size="10">2</text>
+              <text x="94" y="114" font-size="10">3</text>
+              <text x="115" y="114" font-size="10" font-weight="bold" fill="#1d4ed8">4</text>
+              <text x="137" y="114" font-size="10" font-weight="bold" fill="#1d4ed8">5</text>
+              <text x="228" y="114" font-size="10">10</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="red-box p-4 shadow-sm">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="bg-red-600 text-white text-xs font-bold px-2 py-0.5 rounded-full">必背重點</span>
+          <span class="font-bold text-red-700 text-sm">機率密度函數 (PDF) 四大核心性質：</span>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-sm text-slate-800 mt-2">
+          <div class="bg-red-50/70 p-2.5 rounded border border-red-200">
+            <strong class="text-red-700">① 非負性：</strong><br>$f(x) \ge 0$
+          </div>
+          <div class="bg-red-50/70 p-2.5 rounded border border-red-200">
+            <strong class="text-red-700">② 總面積為 1：</strong><br>所有面積相加 $= 1$
+          </div>
+          <div class="bg-red-50/70 p-2.5 rounded border border-red-200">
+            <strong class="text-red-700">③ 點機率為 0：</strong><br>單點無寬度，$P(X=c)=0$
+          </div>
+          <div class="bg-red-50/70 p-2.5 rounded border border-red-200">
+            <strong class="text-red-700">④ 面積即機率：</strong><br>$P(x_1 < X < x_2) = $ 區間面積
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="mb-5">
+        <h2 class="section-pill">§8.1 均勻分配 (Uniform Distribution) $X \sim U(a, b)$</h2>
+      </div>
+
+      <div class="mb-5 text-sm text-slate-800 bg-white/75 p-4 rounded-lg border border-slate-300">
+        <span class="font-bold text-blue-900">💡 均勻分配的意義：</span>
+        ① 隨機變數可能範圍為區間 $(a, b)$，其中 $a$ 為<span class="hl-pink">下界</span>、$b$ 為<span class="hl-pink">上界</span>；
+        ② 在此區間內，<span class="hl-yellow">每個等長小區間發生的可能性均等</span>（高度處處相同）。
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center mb-6">
+        <div class="md:col-span-5 bg-white/85 p-4 rounded-lg border border-slate-300 text-center shadow-sm">
+          <div class="text-xs font-bold text-slate-600 mb-1">一般化均勻分配圖解</div>
+          <svg viewBox="0 0 260 140" class="w-full max-w-[250px] mx-auto">
+            <rect x="95" y="40" width="55" height="65" fill="#fde047" opacity="0.55"/>
+            <rect x="55" y="40" width="150" height="65" fill="none" stroke="#1e3a8a" stroke-width="2"/>
+            <line x1="20" y1="105" x2="240" y2="105" stroke="#334155" stroke-width="1.5"/>
+            <line x1="95" y1="40" x2="95" y2="105" stroke="#dc2626" stroke-dasharray="3,2"/>
+            <line x1="150" y1="40" x2="150" y2="105" stroke="#dc2626" stroke-dasharray="3,2"/>
+            <text x="15" y="32" font-size="11" fill="#1e3a8a" font-weight="bold">高 = 1/(b-a)</text>
+            <text x="103" y="76" font-size="10" fill="#854d0e" font-weight="bold">面積=機率</text>
+            <text x="51" y="120" font-size="11" font-weight="bold">a</text>
+            <text x="90" y="120" font-size="11" fill="#dc2626" font-weight="bold">x₁</text>
+            <text x="145" y="120" font-size="11" fill="#dc2626" font-weight="bold">x₂</text>
+            <text x="201" y="120" font-size="11" font-weight="bold">b</text>
+          </svg>
+          <div class="text-xs text-slate-600 mt-1">口訣：「均勻就是長方形，底乘高就搞定」</div>
+        </div>
+
+        <div class="md:col-span-7 space-y-3">
+          <div class="red-box p-3.5 flex items-center justify-between gap-3">
+            <span class="bg-blue-900 text-white text-xs font-bold px-2.5 py-1 rounded-full shrink-0">① PDF 高度</span>
+            <div class="text-sm md:text-base font-medium text-slate-900 overflow-x-auto">
+              $$f(x) = \frac{1}{b - a}, \quad \text{for } a \le x \le b \quad (\text{其餘為 } 0)$$
+            </div>
+          </div>
+
+          <div class="red-box p-3.5 flex items-center justify-between gap-3">
+            <span class="bg-red-600 text-white text-xs font-bold px-2.5 py-1 rounded-full shrink-0">② 區間機率</span>
+            <div class="text-sm md:text-base font-medium text-slate-900 overflow-x-auto">
+              $$P(x_1 < X < x_2) = (x_2 - x_1) \times \frac{1}{b - a} = \frac{x_2 - x_1}{b - a}$$
+            </div>
+          </div>
+
+          <div class="red-box p-3.5 flex items-center justify-between gap-3">
+            <span class="bg-emerald-700 text-white text-xs font-bold px-2.5 py-1 rounded-full shrink-0">③ 期望值</span>
+            <div class="text-sm md:text-base font-medium text-slate-900 overflow-x-auto">
+              $$E[X] = \frac{a + b}{2}$$
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-blue-50/80 border-l-4 border-blue-700 rounded-r-lg p-5 shadow-sm">
+        <div class="font-bold text-blue-900 text-base mb-2">
+          🚇 課堂例題：等 MRT 時間 $X \sim U(0, 5)$
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+          <div class="md:col-span-7 text-sm text-slate-800 space-y-2">
+            <p><strong>題目設定：</strong>假設捷運每 $5$ 分鐘一班，到達月台的等待時間 $X$ 服從 $0$ 到 $5$ 分鐘的均勻分配，即 $a = 0, \, b = 5$。</p>
+            <p><strong>① 寫出機率密度函數 (PDF)：</strong><br>
+              $$f(x) = \begin{cases} \frac{1}{5 - 0} = \frac{1}{5}, & \text{for } 0 < x < 5 \\ 0, & \text{otherwise (區間外機率 }= 0\text{)} \end{cases}$$
+            </p>
+            <p><strong>② 求等待時間介於 $2$ 到 $4$ 分鐘的機率：</strong><br>
+              $$P(2 < X < 4) = \text{底} \times \text{高} = (4 - 2) \times \frac{1}{5} = \frac{2}{5} = 0.4$$
+            </p>
+            <p><strong>③ 平均等待時間 (期望值)：</strong> $E[X] = \frac{0 + 5}{2} = 2.5$ 分鐘。</p>
+          </div>
+          <div class="md:col-span-5 bg-white p-3 rounded border border-blue-200 text-center">
+            <svg viewBox="0 0 240 120" class="w-full max-w-[230px] mx-auto">
+              <rect x="92" y="35" width="64" height="60" fill="#93c5fd" opacity="0.65"/>
+              <rect x="28" y="35" width="160" height="60" fill="none" stroke="#dc2626" stroke-width="2"/>
+              <line x1="10" y1="95" x2="230" y2="95" stroke="#334155" stroke-width="1.5"/>
+              <text x="85" y="25" font-size="10" fill="#dc2626" font-weight="bold">PDF = 1/5</text>
+              <text x="108" y="68" font-size="10" fill="#1e3a8a" font-weight="bold">2/5</text>
+              <text x="5" y="85" font-size="8.5" fill="#dc2626">機率=0</text>
+              <text x="195" y="85" font-size="8.5" fill="#dc2626">機率=0</text>
+              <text x="25" y="110" font-size="10">0</text>
+              <text x="57" y="110" font-size="10">1</text>
+              <text x="89" y="110" font-size="10" font-weight="bold" fill="#1d4ed8">2</text>
+              <text x="121" y="110" font-size="10">3</text>
+              <text x="153" y="110" font-size="10" font-weight="bold" fill="#1d4ed8">4</text>
+              <text x="185" y="110" font-size="10">5</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  </article>
+
+</body>
+</html>
