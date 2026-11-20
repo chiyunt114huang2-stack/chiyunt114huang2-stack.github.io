@@ -428,22 +428,66 @@
 
   </article>
 <script>
+    <script>
     function showOnlySelectedNote() {
       const sec1 = document.getElementById('sec8-1');
       const sec2 = document.getElementById('sec8-2');
       const divider = document.querySelector('hr');
+      const mapBar = document.querySelector('article > div');
+      const mainTitle = document.querySelector('article header h1');
+
       if (divider) divider.style.display = 'none';
 
       if (window.location.hash === '#sec8-2') {
         if (sec1) sec1.style.display = 'none';
         if (sec2) sec2.style.display = 'block';
+        if (mainTitle) {
+          mainTitle.innerHTML = 'Ch8.2 常態分配 <span class="text-amber-500 text-2xl">✏️</span> 重點筆記';
+        }
+        if (mapBar) {
+          mapBar.innerHTML = `
+            <span class="font-bold text-slate-700 mr-1">本章地圖 ▸</span>
+            <a href="#sec8-1" class="px-3 py-1 rounded-full border border-slate-600 bg-white/80 hover:bg-blue-50 font-medium transition">8.1 連續變數與均勻分配</a>
+            <span class="text-slate-400">→</span>
+            <span class="px-3 py-1 rounded-full border-2 border-red-500 text-red-600 bg-white/90 font-bold">8.2 常態分配 ★★★</span>
+            <span class="text-slate-400">→</span>
+            <span class="px-3 py-1 rounded-full border border-slate-600 bg-white/80 font-medium">標準化 ($Z$ 轉換)</span>
+            <span class="text-slate-400">→</span>
+            <span class="px-3 py-1 rounded-full border border-slate-600 bg-white/80 font-medium">查表求機率</span>
+          `;
+        }
       } else {
         if (sec1) sec1.style.display = 'block';
         if (sec2) sec2.style.display = 'none';
+        if (mainTitle) {
+          mainTitle.innerHTML = 'Ch8.1 連續隨機變數與均勻分配 <span class="text-amber-500 text-2xl">✏️</span> 重點筆記';
+        }
+        if (mapBar) {
+          mapBar.innerHTML = `
+            <span class="font-bold text-slate-700 mr-1">本章地圖 ▸</span>
+            <span class="px-3 py-1 rounded-full border-2 border-red-500 text-red-600 bg-white/90 font-bold">8.1 連續隨機變數 ★</span>
+            <span class="text-slate-400">→</span>
+            <span class="px-3 py-1 rounded-full border border-slate-600 bg-white/80 font-medium">PDF 四大性質</span>
+            <span class="text-slate-400">→</span>
+            <span class="px-3 py-1 rounded-full border-2 border-red-500 text-red-600 bg-white/90 font-bold">均勻分配 U(a, b) ★</span>
+            <span class="text-slate-400">→</span>
+            <a href="#sec8-2" class="px-3 py-1 rounded-full border border-slate-600 bg-white/80 hover:bg-blue-50 font-medium transition">8.2 常態分配</a>
+          `;
+        }
+      }
+
+      if (window.renderMathInElement && mapBar) {
+        renderMathInElement(mapBar, {
+          delimiters: [
+            { left: '$$', right: '$$', display: true },
+            { left: '$', right: '$', display: false }
+          ]
+        });
       }
     }
     window.addEventListener('DOMContentLoaded', showOnlySelectedNote);
     window.addEventListener('hashchange', showOnlySelectedNote);
+  </script>
   </script>
 </body>
 </html>
