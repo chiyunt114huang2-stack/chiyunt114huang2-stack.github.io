@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ch8.2 常態分配 | 黃建瑋筆記</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+  <style>
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background-color: #e2e8f0;
+      color: #1e293b;
+    }
+    .grid-paper {
+      background-color: #f8fafc;
+      background-image: 
+        linear-gradient(to right, rgba(148, 163, 184, 0.22) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(148, 163, 184, 0.22) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+    .section-pill {
+      background-color: #1e3a8a;
+      color: white;
+      display: inline-block;
+      padding: 6px 20px;
+      border-radius: 9999px;
+      font-weight: 700;
+      font-size: 1.05rem;
+      box-shadow: 0 2px 4px rgba(30, 58, 138, 0.2);
+    }
+    .hl-yellow {
+      background: linear-gradient(transparent 55%, #fef08a 55%);
+      padding: 0 2px;
+      font-weight: 600;
+    }
+    .hl-pink {
+      background: linear-gradient(transparent 55%, #fbcfe8 55%);
+      padding: 0 2px;
+      font-weight: 600;
+    }
+    .red-box {
+      border: 1.5px solid #dc2626;
+      background-color: rgba(255, 255, 255, 0.85);
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body class="py-8 px-4">
+
+  <!-- 頂部返回按鈕 -->
+  <div class="max-w-4xl mx-auto mb-4 flex justify-between items-center">
+    <a href="statistics.html" class="inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-blue-700 bg-white px-4 py-2 rounded-lg shadow-sm border border-slate-200 transition">
+      ← 返回章節目錄
+    </a>
+    <span class="text-xs text-slate-500">Chien-Wei Huang • Statistics Notes</span>
+  </div>
+
+  <!-- 筆記本主體 -->
+  <article class="max-w-4xl mx-auto grid-paper rounded-xl shadow-xl border border-slate-300 p-6 md:p-10">
+    
+    <!-- 頁首資訊欄 -->
+    <header class="border-b-2 border-slate-400 pb-4 mb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
+      <div>
+        <h1 class="text-2xl md:text-3xl font-bold text-slate-900 tracking-wide flex items-center gap-2">
+          Ch8.2 常態分配 <span class="text-amber-500 text-2xl">✏️</span> 重點筆記
+        </h1>
+      </div>
+      <div class="text-xs md:text-sm text-slate-600 md:text-right space-y-1">
+        <div class="font-semibold text-slate-700">統計學（一）｜ 銘傳大學 財務金融系</div>
+        <div>姓名：<span class="border-b border-slate-500 px-3 font-medium text-slate-800">黃建瑋</span> 學號：<span class="border-b border-slate-500 px-4"></span></div>
+      </div>
+    </header>
+
+    <!-- 8.2 專屬本章地圖 -->
+    <div class="flex flex-wrap items-center gap-2 text-xs md:text-sm mb-6">
+      <span class="font-bold text-slate-700 mr-1">本章地圖 ▸</span>
+      <span class="px-3 py-1 rounded-full border-2 border-red-500 text-red-600 bg-white/90 font-bold">8.2 常態分配 ★★★</span>
+      <span class="text-slate-400">→</span>
+      <span class="px-3 py-1 rounded-full border border-slate-600 bg-white/80 font-medium">參數特徵 ($\mu, \sigma$)</span>
+      <span class="text-slate-400">→</span>
+      <span class="px-3 py-1 rounded-full border border-slate-600 bg-white/80 font-medium">標準化 ($Z$ 轉換)</span>
+      <span class="text-slate-400">→</span>
+      <span class="px-3 py-1 rounded-full border border-slate-600 bg-white/80 font-medium">查表求機率</span>
+    </div>
+
+    <!-- ==================== §8.2 常態分配 ==================== -->
+    <section>
+      <div class="mb-5">
+        <h2 class="section-pill">§8.2 常態分配 (Normal Distribution) $X \sim N(\mu, \sigma^2)$</h2>
+      </div>
+
+      <div class="bg-amber-100/90 border border-amber-300 rounded-md p-3.5 mb-6 text-sm text-slate-800 leading-relaxed shadow-sm">
+        <span class="font-bold text-amber-900">📌 核心觀念：</span>一般常態分配 $X \sim N(\mu, \sigma^2)$ 無法直接查表，必須先透過<span class="hl-pink">「平移 $\mu$，接著除 $\sigma$」</span>進行標準化轉換成 $Z$ 分配，將中心點移至 $0$ 後即可查表求出機率！
+      </div>
+
+      <!-- 1. 意義與 2. 特徵 -->
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-6 mb-6">
+        <div class="md:col-span-5 bg-white/85 border border-slate-300 rounded-lg p-5 shadow-sm flex flex-col justify-between">
+          <div>
+            <h3 class="font-bold text-blue-900 text-base border-b border-slate-200 pb-2 mb-3">1. 常態分配的意義</h3>
+            <ul class="text-sm space-y-2 text-slate-700">
+              <li>① <span class="hl-yellow">中間值域</span>發生機率較高。</li>
+              <li>② 往兩側<span class="hl-yellow">對稱遞減</span>。</li>
+              <li>③ PDF 呈現<strong>鐘型 (bell-shaped)</strong>。</li>
+            </ul>
+          </div>
+          <div class="mt-4 bg-slate-50 border border-slate-200 rounded p-3 text-center">
+            <svg viewBox="0 0 220 95" class="w-full max-w-[200px] mx-auto">
+              <line x1="15" y1="80" x2="205" y2="80" stroke="#334155" stroke-width="1.5"/>
+              <path d="M 20 78 C 55 78, 75 15, 110 15 C 145 15, 165 78, 200 78" fill="none" stroke="#1e40af" stroke-width="2.2"/>
+              <line x1="110" y1="15" x2="110" y2="80" stroke="#94a3b8" stroke-dasharray="3,2"/>
+              <text x="80" y="92" font-size="9.5" fill="#475569" font-weight="bold">Bell-shaped 鐘型</text>
+            </svg>
+          </div>
+        </div>
+
+        <div class="md:col-span-7 bg-white/85 border border-slate-300 rounded-lg p-5 shadow-sm">
+          <h3 class="font-bold text-blue-900 text-base border-b border-slate-200 pb-2 mb-3">2. 兩大參數特徵：$\mu$ 與 $\sigma$</h3>
+          <div class="text-sm text-slate-700 space-y-2 mb-3">
+            <p>① <strong>參數：</strong><span class="hl-pink">$\mu$ 決定中心點位置</span>；<span class="hl-yellow">$\sigma$ 決定分散程度</span>。</p>
+          </div>
+          <div class="grid grid-cols-2 gap-3 mb-4">
+            <div class="bg-slate-50 border border-slate-200 rounded p-2.5 text-center">
+              <div class="text-xs font-bold text-red-600 mb-1">$\sigma$ 較大 ➔ 圖形較矮胖</div>
+              <svg viewBox="0 0 160 65" class="w-full max-w-[140px] mx-auto">
+                <line x1="10" y1="55" x2="150" y2="55" stroke="#334155" stroke-width="1.2"/>
+                <path d="M 12 53 C 40 53, 55 30, 80 30 C 105 30, 120 53, 148 53" fill="none" stroke="#2563eb" stroke-width="2"/>
+              </svg>
+            </div>
+            <div class="bg-slate-50 border border-slate-200 rounded p-2.5 text-center">
+              <div class="text-xs font-bold text-emerald-700 mb-1">$\sigma$ 較小 ➔ 圖形較高瘦</div>
+              <svg viewBox="0 0 160 65" class="w-full max-w-[140px] mx-auto">
+                <line x1="10" y1="55" x2="150" y2="55" stroke="#334155" stroke-width="1.2"/>
+                <path d="M 35 53 C 62 53, 68 10, 80 10 C 92 10, 98 53, 125 53" fill="none" stroke="#059669" stroke-width="2"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="text-sm text-slate-700">
+            <p class="mb-2">② <strong>PDF 總面積 $= 1$</strong>，註記為：<span class="font-bold text-blue-900 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">$X \sim N(\mu, \sigma^2)$</span></p>
+            <div class="bg-slate-50 border border-slate-200 rounded p-2 text-center">
+              <svg viewBox="0 0 300 90" class="w-full max-w-[280px] mx-auto">
+                <line x1="15" y1="68" x2="285" y2="68" stroke="#334155" stroke-width="1.5"/>
+                <path d="M 25 66 C 80 66, 108 12, 150 12 C 192 12, 220 66, 275 66" fill="#dbeafe" fill-opacity="0.45" stroke="#1e3a8a" stroke-width="2"/>
+                <line x1="150" y1="12" x2="150" y2="68" stroke="#dc2626" stroke-dasharray="3,2"/>
+                <text x="146" y="82" font-size="10" font-weight="bold" fill="#dc2626">μ</text>
+                <text x="100" y="82" font-size="9.5" fill="#334155">μ-σ</text>
+                <text x="52" y="82" font-size="9.5" fill="#334155">μ-2σ</text>
+                <text x="186" y="82" font-size="9.5" fill="#334155">μ+σ</text>
+                <text x="230" y="82" font-size="9.5" fill="#334155">μ+2σ</text>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. 機率計算方式 -->
+      <div class="bg-white/85 border border-slate-300 rounded-lg p-5 mb-6 shadow-sm">
+        <h3 class="font-bold text-blue-900 text-base border-b border-slate-200 pb-2 mb-3">3. 常態分配的機率計算</h3>
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+          <div class="md:col-span-6 text-center bg-slate-50 p-3 rounded border border-slate-200">
+            <svg viewBox="0 0 260 110" class="w-full max-w-[240px] mx-auto">
+              <path d="M 105 85 L 105 32 C 115 20, 125 16, 135 16 C 142 16, 148 20, 155 28 L 155 85 Z" fill="#fca5a5" opacity="0.65"/>
+              <line x1="15" y1="85" x2="245" y2="85" stroke="#334155" stroke-width="1.5"/>
+              <path d="M 25 83 C 75 83, 95 16, 130 16 C 165 16, 185 83, 235 83" fill="none" stroke="#1e3a8a" stroke-width="2"/>
+              <line x1="105" y1="32" x2="105" y2="85" stroke="#dc2626" stroke-width="1.5"/>
+              <line x1="155" y1="28" x2="155" y2="85" stroke="#dc2626" stroke-width="1.5"/>
+              <text x="100" y="99" font-size="10" fill="#dc2626" font-weight="bold">x₀</text>
+              <text x="150" y="99" font-size="10" fill="#dc2626" font-weight="bold">x₁</text>
+            </svg>
+          </div>
+          <div class="md:col-span-6 text-sm text-slate-800 space-y-2.5">
+            <p class="font-bold text-red-700 text-base">$P(x_0 \le X \le x_1) \Rightarrow x_0$ 到 $x_1$ 之間的機率</p>
+            <p>計算方式：</p>
+            <ul class="space-y-1.5 pl-2">
+              <li>① <strong>電腦程式算：</strong>Python、Excel、AI 工具。</li>
+              <li>② <strong>查表：</strong>先轉換為<strong>4. 標準常態分配 (Standard Normal Distribution, $Z$)</strong> 再查表。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. 一般常態分配的機率 (課堂例題) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-blue-50/85 border-l-4 border-blue-700 rounded-r-lg p-5 shadow-sm">
+          <div class="font-bold text-blue-900 text-base mb-2">☕ 5. 一般常態分配的機率：路易莎等待時間</div>
+          <p class="text-sm text-slate-800 mb-2">已知 $X \sim N(5, 2^2)$（$\mu = 5, \, \sigma = 2$），求 $P(X \gt 6)$：</p>
+          <div class="bg-white p-3 rounded border border-blue-200 text-sm space-y-2">
+            <div>
+              $$P(X \gt 6) = P\left(\frac{X - 5}{2} \gt \frac{6 - 5}{2}\right) = P(Z \gt 0.5)$$
+            </div>
+            <div class="text-xs text-red-600 font-medium border-t border-slate-100 pt-2">
+              💡 <strong>課堂重點：</strong>平移 $\mu$（中心點從 $5$ 移到 $0$），接著除 $\sigma$，即可轉為標準常態 $Z$！
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-blue-50/85 border-l-4 border-indigo-700 rounded-r-lg p-5 shadow-sm">
+          <div class="font-bold text-indigo-900 text-base mb-2">📝 課堂例題：例題 8.4</div>
+          <p class="text-sm text-slate-800 mb-2">已知 $X \sim N(32, 5^2)$（$\mu = 32, \, \sigma = 5$），求 $P(X \lt 40)$：</p>
+          <div class="bg-white p-3 rounded border border-indigo-200 text-sm space-y-2">
+            <div>
+              $$P(X \lt 40) = P\left(\frac{X - 32}{5} \lt \frac{40 - 32}{5}\right)$$
+              $$= P(Z \lt 1.6) = 0.9452$$
+            </div>
+            <div class="text-xs text-emerald-700 font-bold border-t border-slate-100 pt-2">
+              ✔ 轉換為 $P(Z \lt 1.6)$ 後，考試時可直接查表得出 $0.9452$！
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 終極結論紅框 -->
+      <div class="red-box p-5 shadow-sm">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="bg-red-600 text-white text-xs font-bold px-2.5 py-0.5 rounded-full">結論</span>
+          <span class="font-bold text-red-700 text-base">一般常態分配標準化公式：$X \sim N(\mu, \sigma^2)$</span>
+        </div>
+        <div class="bg-red-50/60 p-4 rounded border border-red-200 text-center overflow-x-auto">
+          <div class="text-base md:text-lg font-bold text-slate-900">
+            $$P(X \lt x_0) = P\left(\underbrace{\frac{X - \mu}{\sigma}}_{\text{標準化 } Z} \lt \frac{x_0 - \mu}{\sigma}\right) = P\left(Z \lt \frac{x_0 - \mu}{\sigma}\right) \Longrightarrow \text{查表！}$$
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </article>
+
+</body>
+</html>
