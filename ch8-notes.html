@@ -427,6 +427,23 @@
     </section>
 
   </article>
+<script>
+    function showOnlySelectedNote() {
+      const sec1 = document.getElementById('sec8-1');
+      const sec2 = document.getElementById('sec8-2');
+      const divider = document.querySelector('hr');
+      if (divider) divider.style.display = 'none';
 
+      if (window.location.hash === '#sec8-2') {
+        if (sec1) sec1.style.display = 'none';
+        if (sec2) sec2.style.display = 'block';
+      } else {
+        if (sec1) sec1.style.display = 'block';
+        if (sec2) sec2.style.display = 'none';
+      }
+    }
+    window.addEventListener('DOMContentLoaded', showOnlySelectedNote);
+    window.addEventListener('hashchange', showOnlySelectedNote);
+  </script>
 </body>
 </html>
